@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bird.breeze.edu.dao.UserFuncMapper">
+    <resultMap id="UserFuncResultMap" type="org.bird.breeze.edu.model.EduFunc">
+        <result column="FUNC_ID" jdbcType="INTEGER" property="id" />
+        <result column="FUNC_CODE" jdbcType="VARCHAR" property="funcCode" />
+        <result column="FUNC_NAME" jdbcType="VARCHAR" property="funcName" />
+        <result column="FUNC_ORDER" jdbcType="INTEGER" property="funcOrder" />
+        <result column="SUP_FUNC_ID" jdbcType="INTEGER" property="supFuncId" />
+        <result column="DATA_STATE" jdbcType="INTEGER" property="dataState" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+        <result column="FUNC_URL" jdbcType="VARCHAR" property="funcUrl" />
+    </resultMap>
+    <sql id="func_Column_List">
+        f.ID FUNC_ID, f.FUNC_CODE, f.FUNC_NAME, f.FUNC_ORDER, f.SUP_FUNC_ID, f.DATA_STATE,
+        f.CREATE_TIME, f.MODIFY_TIME, f.FUNC_URL
+    </sql>
+    <select id="selectUserFunc" parameterType="java.lang.Integer" resultMap="UserFuncResultMap">
+        select a.*, IF(a.SUP_FUNC_ID=-1, a.FUNC_ID, a.SUP_FUNC_ID) SUP_FUNC_ORD,
+        IF(a.SUP_FUNC_ID=-1, 0, a.FUNC_ORDER) FUNC_ORD from
+        (
+        select
+            distinct
+        <include refid="func_Column_List" />
+        from EDU_FUNC f, EDU_FUNC_GRP_FUNC_RLT fgfr, EDU_USER_FUNC_GRP_RLT ufgr
+        where ufgr.GRP_ID = fgfr.GRP_ID and fgfr.FUNC_ID = f.ID and f.DATA_STATE = 1
+        and fgfr.DATA_STATE = 1 and ufgr.DATA_STATE = 1
+        and ufgr.USER_ID = #{userId,jdbcType=TIMESTAMP}
+        ) a
+        order by SUP_FUNC_ORD, FUNC_ORD
+    </select>
+</mapper>

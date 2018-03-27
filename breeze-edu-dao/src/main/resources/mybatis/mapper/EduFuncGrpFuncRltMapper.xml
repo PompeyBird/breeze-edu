@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bird.breeze.edu.dao.EduFuncGrpFuncRltMapper">
+  <resultMap id="BaseResultMap" type="org.bird.breeze.edu.model.EduFuncGrpFuncRlt">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="GRP_ID" jdbcType="VARCHAR" property="grpId" />
+    <result column="FUNC_ID" jdbcType="VARCHAR" property="funcId" />
+    <result column="DATA_STATE" jdbcType="INTEGER" property="dataState" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, GRP_ID, FUNC_ID, DATA_STATE, CREATE_TIME, MODIFY_TIME
+  </sql>
+  <select id="selectByExample" parameterType="org.bird.breeze.edu.model.EduFuncGrpFuncRltExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EDU_FUNC_GRP_FUNC_RLT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EDU_FUNC_GRP_FUNC_RLT
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from EDU_FUNC_GRP_FUNC_RLT
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.bird.breeze.edu.model.EduFuncGrpFuncRltExample">
+    delete from EDU_FUNC_GRP_FUNC_RLT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.bird.breeze.edu.model.EduFuncGrpFuncRlt">
+    insert into EDU_FUNC_GRP_FUNC_RLT (ID, GRP_ID, FUNC_ID, 
+      DATA_STATE, CREATE_TIME, MODIFY_TIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{grpId,jdbcType=VARCHAR}, #{funcId,jdbcType=VARCHAR}, 
+      #{dataState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.bird.breeze.edu.model.EduFuncGrpFuncRlt">
+    insert into EDU_FUNC_GRP_FUNC_RLT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="grpId != null">
+        GRP_ID,
+      </if>
+      <if test="funcId != null">
+        FUNC_ID,
+      </if>
+      <if test="dataState != null">
+        DATA_STATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="grpId != null">
+        #{grpId,jdbcType=VARCHAR},
+      </if>
+      <if test="funcId != null">
+        #{funcId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null">
+        #{dataState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.bird.breeze.edu.model.EduFuncGrpFuncRltExample" resultType="java.lang.Long">
+    select count(*) from EDU_FUNC_GRP_FUNC_RLT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update EDU_FUNC_GRP_FUNC_RLT
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.grpId != null">
+        GRP_ID = #{record.grpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.funcId != null">
+        FUNC_ID = #{record.funcId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataState != null">
+        DATA_STATE = #{record.dataState,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update EDU_FUNC_GRP_FUNC_RLT
+    set ID = #{record.id,jdbcType=INTEGER},
+      GRP_ID = #{record.grpId,jdbcType=VARCHAR},
+      FUNC_ID = #{record.funcId,jdbcType=VARCHAR},
+      DATA_STATE = #{record.dataState,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.bird.breeze.edu.model.EduFuncGrpFuncRlt">
+    update EDU_FUNC_GRP_FUNC_RLT
+    <set>
+      <if test="grpId != null">
+        GRP_ID = #{grpId,jdbcType=VARCHAR},
+      </if>
+      <if test="funcId != null">
+        FUNC_ID = #{funcId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null">
+        DATA_STATE = #{dataState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.bird.breeze.edu.model.EduFuncGrpFuncRlt">
+    update EDU_FUNC_GRP_FUNC_RLT
+    set GRP_ID = #{grpId,jdbcType=VARCHAR},
+      FUNC_ID = #{funcId,jdbcType=VARCHAR},
+      DATA_STATE = #{dataState,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bird.breeze.edu.dao.EduLessonMapper">
+  <resultMap id="BaseResultMap" type="org.bird.breeze.edu.model.EduLesson">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="LESSON_NAME" jdbcType="VARCHAR" property="lessonName" />
+    <result column="LESSON_DATE" jdbcType="TIMESTAMP" property="lessonDate" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="NEED_CHECK" jdbcType="INTEGER" property="needCheck" />
+    <result column="CHECK_PERIOD" jdbcType="INTEGER" property="checkPeriod" />
+    <result column="CHECK_START_TIME" jdbcType="TIMESTAMP" property="checkStartTime" />
+    <result column="CHECK_END_TIME" jdbcType="TIMESTAMP" property="checkEndTime" />
+    <result column="CHECK_ADDR" jdbcType="VARCHAR" property="checkAddr" />
+    <result column="CONCRETE_ADDR" jdbcType="VARCHAR" property="concreteAddr" />
+    <result column="COORDINATE_X" jdbcType="VARCHAR" property="coordinateX" />
+    <result column="COORDINATE_Y" jdbcType="VARCHAR" property="coordinateY" />
+    <result column="DATA_STATE" jdbcType="INTEGER" property="dataState" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, USER_ID, LESSON_NAME, LESSON_DATE, START_TIME, END_TIME, NEED_CHECK, CHECK_PERIOD, 
+    CHECK_START_TIME, CHECK_END_TIME, CHECK_ADDR, CONCRETE_ADDR, COORDINATE_X, COORDINATE_Y, 
+    DATA_STATE, CREATE_TIME, MODIFY_TIME
+  </sql>
+  <select id="selectByExample" parameterType="org.bird.breeze.edu.model.EduLessonExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EDU_LESSON
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EDU_LESSON
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from EDU_LESSON
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.bird.breeze.edu.model.EduLessonExample">
+    delete from EDU_LESSON
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.bird.breeze.edu.model.EduLesson">
+    insert into EDU_LESSON (ID, USER_ID, LESSON_NAME, 
+      LESSON_DATE, START_TIME, END_TIME, 
+      NEED_CHECK, CHECK_PERIOD, CHECK_START_TIME, 
+      CHECK_END_TIME, CHECK_ADDR, CONCRETE_ADDR, 
+      COORDINATE_X, COORDINATE_Y, DATA_STATE, 
+      CREATE_TIME, MODIFY_TIME)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{lessonName,jdbcType=VARCHAR}, 
+      #{lessonDate,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{needCheck,jdbcType=INTEGER}, #{checkPeriod,jdbcType=INTEGER}, #{checkStartTime,jdbcType=TIMESTAMP}, 
+      #{checkEndTime,jdbcType=TIMESTAMP}, #{checkAddr,jdbcType=VARCHAR}, #{concreteAddr,jdbcType=VARCHAR}, 
+      #{coordinateX,jdbcType=VARCHAR}, #{coordinateY,jdbcType=VARCHAR}, #{dataState,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.bird.breeze.edu.model.EduLesson">
+    insert into EDU_LESSON
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="lessonName != null">
+        LESSON_NAME,
+      </if>
+      <if test="lessonDate != null">
+        LESSON_DATE,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="needCheck != null">
+        NEED_CHECK,
+      </if>
+      <if test="checkPeriod != null">
+        CHECK_PERIOD,
+      </if>
+      <if test="checkStartTime != null">
+        CHECK_START_TIME,
+      </if>
+      <if test="checkEndTime != null">
+        CHECK_END_TIME,
+      </if>
+      <if test="checkAddr != null">
+        CHECK_ADDR,
+      </if>
+      <if test="concreteAddr != null">
+        CONCRETE_ADDR,
+      </if>
+      <if test="coordinateX != null">
+        COORDINATE_X,
+      </if>
+      <if test="coordinateY != null">
+        COORDINATE_Y,
+      </if>
+      <if test="dataState != null">
+        DATA_STATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonName != null">
+        #{lessonName,jdbcType=VARCHAR},
+      </if>
+      <if test="lessonDate != null">
+        #{lessonDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="needCheck != null">
+        #{needCheck,jdbcType=INTEGER},
+      </if>
+      <if test="checkPeriod != null">
+        #{checkPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="checkStartTime != null">
+        #{checkStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkEndTime != null">
+        #{checkEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkAddr != null">
+        #{checkAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="concreteAddr != null">
+        #{concreteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateX != null">
+        #{coordinateX,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateY != null">
+        #{coordinateY,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null">
+        #{dataState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.bird.breeze.edu.model.EduLessonExample" resultType="java.lang.Long">
+    select count(*) from EDU_LESSON
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update EDU_LESSON
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        USER_ID = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lessonName != null">
+        LESSON_NAME = #{record.lessonName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lessonDate != null">
+        LESSON_DATE = #{record.lessonDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startTime != null">
+        START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.needCheck != null">
+        NEED_CHECK = #{record.needCheck,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkPeriod != null">
+        CHECK_PERIOD = #{record.checkPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkStartTime != null">
+        CHECK_START_TIME = #{record.checkStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkEndTime != null">
+        CHECK_END_TIME = #{record.checkEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkAddr != null">
+        CHECK_ADDR = #{record.checkAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.concreteAddr != null">
+        CONCRETE_ADDR = #{record.concreteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coordinateX != null">
+        COORDINATE_X = #{record.coordinateX,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coordinateY != null">
+        COORDINATE_Y = #{record.coordinateY,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataState != null">
+        DATA_STATE = #{record.dataState,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update EDU_LESSON
+    set ID = #{record.id,jdbcType=INTEGER},
+      USER_ID = #{record.userId,jdbcType=INTEGER},
+      LESSON_NAME = #{record.lessonName,jdbcType=VARCHAR},
+      LESSON_DATE = #{record.lessonDate,jdbcType=TIMESTAMP},
+      START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      NEED_CHECK = #{record.needCheck,jdbcType=INTEGER},
+      CHECK_PERIOD = #{record.checkPeriod,jdbcType=INTEGER},
+      CHECK_START_TIME = #{record.checkStartTime,jdbcType=TIMESTAMP},
+      CHECK_END_TIME = #{record.checkEndTime,jdbcType=TIMESTAMP},
+      CHECK_ADDR = #{record.checkAddr,jdbcType=VARCHAR},
+      CONCRETE_ADDR = #{record.concreteAddr,jdbcType=VARCHAR},
+      COORDINATE_X = #{record.coordinateX,jdbcType=VARCHAR},
+      COORDINATE_Y = #{record.coordinateY,jdbcType=VARCHAR},
+      DATA_STATE = #{record.dataState,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.bird.breeze.edu.model.EduLesson">
+    update EDU_LESSON
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="lessonName != null">
+        LESSON_NAME = #{lessonName,jdbcType=VARCHAR},
+      </if>
+      <if test="lessonDate != null">
+        LESSON_DATE = #{lessonDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="needCheck != null">
+        NEED_CHECK = #{needCheck,jdbcType=INTEGER},
+      </if>
+      <if test="checkPeriod != null">
+        CHECK_PERIOD = #{checkPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="checkStartTime != null">
+        CHECK_START_TIME = #{checkStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkEndTime != null">
+        CHECK_END_TIME = #{checkEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkAddr != null">
+        CHECK_ADDR = #{checkAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="concreteAddr != null">
+        CONCRETE_ADDR = #{concreteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateX != null">
+        COORDINATE_X = #{coordinateX,jdbcType=VARCHAR},
+      </if>
+      <if test="coordinateY != null">
+        COORDINATE_Y = #{coordinateY,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null">
+        DATA_STATE = #{dataState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.bird.breeze.edu.model.EduLesson">
+    update EDU_LESSON
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      LESSON_NAME = #{lessonName,jdbcType=VARCHAR},
+      LESSON_DATE = #{lessonDate,jdbcType=TIMESTAMP},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      NEED_CHECK = #{needCheck,jdbcType=INTEGER},
+      CHECK_PERIOD = #{checkPeriod,jdbcType=INTEGER},
+      CHECK_START_TIME = #{checkStartTime,jdbcType=TIMESTAMP},
+      CHECK_END_TIME = #{checkEndTime,jdbcType=TIMESTAMP},
+      CHECK_ADDR = #{checkAddr,jdbcType=VARCHAR},
+      CONCRETE_ADDR = #{concreteAddr,jdbcType=VARCHAR},
+      COORDINATE_X = #{coordinateX,jdbcType=VARCHAR},
+      COORDINATE_Y = #{coordinateY,jdbcType=VARCHAR},
+      DATA_STATE = #{dataState,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bird.breeze.edu.dao.EduCheckInMapper">
+  <resultMap id="BaseResultMap" type="org.bird.breeze.edu.model.EduCheckIn">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="LESSON_ID" jdbcType="INTEGER" property="lessonId" />
+    <result column="WECHAT_USER_ID" jdbcType="INTEGER" property="wechatUserId" />
+    <result column="CHECK_IN_TIME" jdbcType="TIMESTAMP" property="checkInTime" />
+    <result column="CHECK_IN_ADDR" jdbcType="VARCHAR" property="checkInAddr" />
+    <result column="DATA_STATE" jdbcType="INTEGER" property="dataState" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, LESSON_ID, WECHAT_USER_ID, CHECK_IN_TIME, CHECK_IN_ADDR, DATA_STATE, CREATE_TIME, 
+    MODIFY_TIME
+  </sql>
+  <select id="selectByExample" parameterType="org.bird.breeze.edu.model.EduCheckInExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from EDU_CHECK_IN
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EDU_CHECK_IN
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from EDU_CHECK_IN
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.bird.breeze.edu.model.EduCheckInExample">
+    delete from EDU_CHECK_IN
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.bird.breeze.edu.model.EduCheckIn">
+    insert into EDU_CHECK_IN (ID, LESSON_ID, WECHAT_USER_ID, 
+      CHECK_IN_TIME, CHECK_IN_ADDR, DATA_STATE, 
+      CREATE_TIME, MODIFY_TIME)
+    values (#{id,jdbcType=INTEGER}, #{lessonId,jdbcType=INTEGER}, #{wechatUserId,jdbcType=INTEGER}, 
+      #{checkInTime,jdbcType=TIMESTAMP}, #{checkInAddr,jdbcType=VARCHAR}, #{dataState,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.bird.breeze.edu.model.EduCheckIn">
+    insert into EDU_CHECK_IN
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="lessonId != null">
+        LESSON_ID,
+      </if>
+      <if test="wechatUserId != null">
+        WECHAT_USER_ID,
+      </if>
+      <if test="checkInTime != null">
+        CHECK_IN_TIME,
+      </if>
+      <if test="checkInAddr != null">
+        CHECK_IN_ADDR,
+      </if>
+      <if test="dataState != null">
+        DATA_STATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lessonId != null">
+        #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="wechatUserId != null">
+        #{wechatUserId,jdbcType=INTEGER},
+      </if>
+      <if test="checkInTime != null">
+        #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkInAddr != null">
+        #{checkInAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null">
+        #{dataState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.bird.breeze.edu.model.EduCheckInExample" resultType="java.lang.Long">
+    select count(*) from EDU_CHECK_IN
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update EDU_CHECK_IN
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.lessonId != null">
+        LESSON_ID = #{record.lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wechatUserId != null">
+        WECHAT_USER_ID = #{record.wechatUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkInTime != null">
+        CHECK_IN_TIME = #{record.checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkInAddr != null">
+        CHECK_IN_ADDR = #{record.checkInAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataState != null">
+        DATA_STATE = #{record.dataState,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update EDU_CHECK_IN
+    set ID = #{record.id,jdbcType=INTEGER},
+      LESSON_ID = #{record.lessonId,jdbcType=INTEGER},
+      WECHAT_USER_ID = #{record.wechatUserId,jdbcType=INTEGER},
+      CHECK_IN_TIME = #{record.checkInTime,jdbcType=TIMESTAMP},
+      CHECK_IN_ADDR = #{record.checkInAddr,jdbcType=VARCHAR},
+      DATA_STATE = #{record.dataState,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.bird.breeze.edu.model.EduCheckIn">
+    update EDU_CHECK_IN
+    <set>
+      <if test="lessonId != null">
+        LESSON_ID = #{lessonId,jdbcType=INTEGER},
+      </if>
+      <if test="wechatUserId != null">
+        WECHAT_USER_ID = #{wechatUserId,jdbcType=INTEGER},
+      </if>
+      <if test="checkInTime != null">
+        CHECK_IN_TIME = #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkInAddr != null">
+        CHECK_IN_ADDR = #{checkInAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null">
+        DATA_STATE = #{dataState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.bird.breeze.edu.model.EduCheckIn">
+    update EDU_CHECK_IN
+    set LESSON_ID = #{lessonId,jdbcType=INTEGER},
+      WECHAT_USER_ID = #{wechatUserId,jdbcType=INTEGER},
+      CHECK_IN_TIME = #{checkInTime,jdbcType=TIMESTAMP},
+      CHECK_IN_ADDR = #{checkInAddr,jdbcType=VARCHAR},
+      DATA_STATE = #{dataState,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
