@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bird.breeze.edu.dao.LessonCheckInMapper">
+    <resultMap id="LessonCheckInMap" type="org.bird.breeze.edu.bean.lesson.CheckInBean">
+        <result column="ID" jdbcType="INTEGER" property="checkInId" />
+        <result column="LESSON_NAME" jdbcType="VARCHAR" property="lessonName" />
+        <result column="CONCRETE_ADDR" jdbcType="VARCHAR" property="concreteAddr" />
+        <result column="STUDENT_ID" jdbcType="INTEGER" property="studentId" />
+        <result column="CLASS_ID" jdbcType="INTEGER" property="classId" />
+        <result column="REALNAME" jdbcType="INTEGER" property="realname" />
+        <result column="CHECK_IN_TIME" jdbcType="TIMESTAMP" property="checkInTime" />
+    </resultMap>
+    <select id="selectLessonCheckIn" parameterType="java.lang.Integer" resultMap="LessonCheckInMap">
+        select c.ID, l.LESSON_NAME, l.CONCRETE_ADDR, u.CLASS_ID, u.STUDENT_ID, u.REALNAME, c.CHECK_IN_TIME
+        from EDU_LESSON l
+        inner join EDU_CHECK_IN c on l.ID = c.LESSON_ID
+        inner join EDU_WECHAT_USER u on c.WECHAT_USER_ID = u.ID
+        where l.ID = #{lessonId,jdbcType=TIMESTAMP};
+    </select>
+</mapper>

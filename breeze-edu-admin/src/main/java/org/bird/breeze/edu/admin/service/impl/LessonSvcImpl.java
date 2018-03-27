@@ -4,9 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.bird.breeze.edu.admin.service.ILessonSvc;
 import org.bird.breeze.edu.bean.common.BreezeResult;
 import org.bird.breeze.edu.bean.common.PageBean;
+import org.bird.breeze.edu.bean.lesson.CheckInBean;
 import org.bird.breeze.edu.bean.lesson.LessonFormBean;
 import org.bird.breeze.edu.bean.lesson.LessonSearchBean;
 import org.bird.breeze.edu.dao.EduLessonMapper;
+import org.bird.breeze.edu.dao.LessonCheckInMapper;
 import org.bird.breeze.edu.model.EduLesson;
 import org.bird.breeze.edu.model.EduLessonExample;
 import org.bird.breeze.edu.utils.BreezeDateUtils;
@@ -26,6 +28,8 @@ public class LessonSvcImpl extends BaseSvcImpl implements ILessonSvc {
 
     @Autowired
     private EduLessonMapper eduLessonMapper;
+    @Autowired
+    private LessonCheckInMapper checkInMapper;
 
     /**
      *
@@ -220,4 +224,16 @@ public class LessonSvcImpl extends BaseSvcImpl implements ILessonSvc {
         return eduLessonExample;
     }
 
+    @Override
+    public BreezeResult<List<CheckInBean>> downLoadCheckIn(Integer lessonId){
+        BreezeResult<List<CheckInBean>> result = null;
+        try {
+            List<CheckInBean> list = checkInMapper.selectLessonCheckIn(lessonId);
+            result = new BreezeResult<List<CheckInBean>>();
+            result.setData(list);
+        } catch (Exception e){
+            result = new BreezeResult<List<CheckInBean>>("查询签到信息失败");
+        }
+        return result;
+    }
 }

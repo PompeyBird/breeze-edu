@@ -28,7 +28,7 @@ public class AdminWebConfig {
     public FilterRegistrationBean jwtFilter() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         JwtFilter jwtFilter = new JwtFilter();
-        jwtFilter.setExceptUrlRegex("/auth/**");
+        jwtFilter.setExceptUrlRegex("/auth/**,/lessons/download/**");
         registrationBean.setFilter(jwtFilter);
         registrationBean.addUrlPatterns("/*");
         registrationBean.setOrder(Integer.MAX_VALUE-1);

@@ -2,9 +2,12 @@ package org.bird.breeze.edu.admin.service;
 
 import org.bird.breeze.edu.bean.common.BreezeResult;
 import org.bird.breeze.edu.bean.common.PageBean;
+import org.bird.breeze.edu.bean.lesson.CheckInBean;
 import org.bird.breeze.edu.bean.lesson.LessonFormBean;
 import org.bird.breeze.edu.bean.lesson.LessonSearchBean;
 import org.bird.breeze.edu.model.EduLesson;
+
+import java.util.List;
 
 public interface ILessonSvc {
 
@@ -18,4 +21,6 @@ public interface ILessonSvc {
     BreezeResult<EduLesson> queryLessonById(Integer lessonId, Integer userId);
 
     BreezeResult<Integer> deleteLessonById(Integer lessonId, Integer userId);
+
+    BreezeResult<List<CheckInBean>> downLoadCheckIn(Integer lessonId);
 }
